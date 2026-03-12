@@ -27,18 +27,7 @@ justify-content:center;
 
 /* ชั้นมืดทับภาพ (ลดความเข้มลงเล็กน้อย) */
 
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-
-background:rgba(0,0,0,0.35);
-
-z-index:0;
-}
+body::before
 
 /* กล่องเนื้อหา */
 
@@ -49,7 +38,7 @@ z-index:1;
 
 /* โปร่งใสมากขึ้น */
 
-background:rgba(255,255,255,0.55);
+background:rgba(255,255,255,0.90);
 
 backdrop-filter:blur(8px);
 
@@ -225,3 +214,4 @@ document.getElementById("today").innerText=
 
 </body>
 </html>
+
