@@ -25,193 +25,71 @@ align-items:center;
 justify-content:center;
 }
 
-/* ชั้นมืดทับภาพ (ลดความเข้มลงเล็กน้อย) */
-
-body::before
-
 /* กล่องเนื้อหา */
 
 .container{
 
 position:relative;
-z-index:1;
 
 /* โปร่งใสมากขึ้น */
 
-background:rgba(255,255,255,0.90);
+background:rgba(255,255,255,0.40);
 
-backdrop-filter:blur(8px);
+backdrop-filter:blur(6px);
 
 padding:30px 18px;
 
 border-radius:20px;
 
-box-shadow:0 8px 30px rgba(0,0,0,0.35);
+box-shadow:0 6px 25px rgba(0,0,0,0.25);
 
 max-width:480px;
 width:90%;
 
 text-align:center;
+
 }
 
 /* ไอคอนประทีป */
 
 .lamp{
-font-size:85px;
+font-size:90px;
 animation:flicker 2s infinite;
 }
 
 /* หัวข้อ */
 
 h1{
-font-size:34px;
+font-size:36px;
 color:#c0392b;
 margin:10px 0;
-
-text-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* ตัวเลขวัน */
 
 .counter{
-font-size:40px;
+font-size:42px;
 font-weight:bold;
 color:#d35400;
 
 margin-top:16px;
 line-height:1.4;
-
-text-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* ปี เดือน วัน */
 
 .details{
-font-size:20px;
+font-size:22px;
 margin-top:8px;
 color:#222;
-
-text-shadow:0 2px 6px rgba(0,0,0,0.25);
 }
 
 /* วันที่วันนี้ */
 
 .today{
 margin-top:16px;
-font-size:17px;
+font-size:19px;
 color:#222;
-
-text-shadow:0 2px 6px rgba(0,0,0,0.25);
 }
 
-/* เอฟเฟกต์ไฟ */
-
-@keyframes flicker{
-0%,100%{opacity:1}
-50%{opacity:0.8}
-}
-
-/* มือถือ */
-
-@media(max-width:600px){
-
-.container{
-padding:25px 14px;
-width:88%;
-}
-
-.lamp{
-font-size:65px;
-}
-
-h1{
-font-size:26px;
-}
-
-.counter{
-font-size:30px;
-}
-
-.details{
-font-size:17px;
-}
-
-.today{
-font-size:15px;
-}
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="lamp">🪔</div>
-
-<h1>วันจุดประทีป</h1>
-
-<div id="days" class="counter"></div>
-
-<div id="details" class="details"></div>
-
-<div class="today">
-เริ่มจุดประทีปตั้งแต่วันที่  
-25 มีนาคม พ.ศ. 2564
-</div>
-
-<div id="today" class="today"></div>
-
-</div>
-
-<script>
-
-const startDate = new Date('2021-03-25');
-const today = new Date();
-
-startDate.setHours(0,0,0,0);
-today.setHours(0,0,0,0);
-
-const diffMs = today - startDate;
-const days = Math.floor(diffMs/(1000*60*60*24))+1;
-
-document.getElementById("days").innerHTML=
-`จุดประทีปบูชาเจดีย์<br>มาแล้ว ${days} วัน`;
-
-let years = today.getFullYear()-startDate.getFullYear();
-let months = today.getMonth()-startDate.getMonth();
-let daysRemain = today.getDate()-startDate.getDate();
-
-if(daysRemain<0){
-months--;
-daysRemain+=new Date(today.getFullYear(),today.getMonth(),0).getDate();
-}
-
-if(months<0){
-years--;
-months+=12;
-}
-
-document.getElementById("details").innerText=
-`เท่ากับ ${years} ปี ${months} เดือน ${daysRemain} วัน`;
-
-const thaiMonths=[
-"มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
-"กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"
-];
-
-const day=today.getDate();
-const month=thaiMonths[today.getMonth()];
-const year=today.getFullYear()+543;
-
-document.getElementById("today").innerText=
-`วันนี้วันที่ ${day} ${month} พ.ศ. ${year}`;
-
-</script>
-
-</body>
-</html>
-
+/*
