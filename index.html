@@ -12,9 +12,7 @@
 <style>
 
 body{
-
 font-family:'Sarabun',sans-serif;
-
 margin:0;
 padding:0;
 
@@ -25,126 +23,133 @@ min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-
 }
 
-/* ชั้นมืดทับภาพ */
+/* ชั้นมืดทับภาพ (ลดความเข้มลงเล็กน้อย) */
 
 body::before{
-
 content:"";
-
 position:fixed;
-
 top:0;
 left:0;
 right:0;
 bottom:0;
 
-background:rgba(0,0,0,0.45);
+background:rgba(0,0,0,0.35);
 
 z-index:0;
-
 }
+
+/* กล่องเนื้อหา */
 
 .container{
 
 position:relative;
-
 z-index:1;
 
-background:rgba(255,255,255,0.9);
+/* โปร่งใสมากขึ้น */
 
-backdrop-filter:blur(6px);
+background:rgba(255,255,255,0.55);
 
-padding:35px 20px;
+backdrop-filter:blur(8px);
 
-border-radius:22px;
+padding:30px 18px;
 
-box-shadow:0 10px 35px rgba(0,0,0,0.4);
+border-radius:20px;
 
-max-width:520px;
-width:92%;
+box-shadow:0 8px 30px rgba(0,0,0,0.35);
+
+max-width:480px;
+width:90%;
 
 text-align:center;
-
 }
+
+/* ไอคอนประทีป */
 
 .lamp{
-
-font-size:90px;
-
+font-size:85px;
 animation:flicker 2s infinite;
-
 }
+
+/* หัวข้อ */
 
 h1{
-
-font-size:36px;
-
+font-size:34px;
 color:#c0392b;
-
 margin:10px 0;
 
+text-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
+
+/* ตัวเลขวัน */
 
 .counter{
-
-font-size:42px;
-
+font-size:40px;
 font-weight:bold;
-
 color:#d35400;
 
-margin-top:18px;
-
+margin-top:16px;
 line-height:1.4;
 
+text-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
+
+/* ปี เดือน วัน */
 
 .details{
+font-size:20px;
+margin-top:8px;
+color:#222;
 
-font-size:21px;
-
-margin-top:10px;
-
-color:#333;
-
+text-shadow:0 2px 6px rgba(0,0,0,0.25);
 }
 
+/* วันที่วันนี้ */
+
 .today{
+margin-top:16px;
+font-size:17px;
+color:#222;
 
-margin-top:18px;
-
-font-size:18px;
-
-color:#444;
-
+text-shadow:0 2px 6px rgba(0,0,0,0.25);
 }
 
 /* เอฟเฟกต์ไฟ */
 
 @keyframes flicker{
-
 0%,100%{opacity:1}
-
 50%{opacity:0.8}
-
 }
 
 /* มือถือ */
 
 @media(max-width:600px){
 
-.lamp{font-size:70px}
+.container{
+padding:25px 14px;
+width:88%;
+}
 
-h1{font-size:28px}
+.lamp{
+font-size:65px;
+}
 
-.counter{font-size:32px}
+h1{
+font-size:26px;
+}
 
-.details{font-size:18px}
+.counter{
+font-size:30px;
+}
 
-.today{font-size:16px}
+.details{
+font-size:17px;
+}
+
+.today{
+font-size:15px;
+}
 
 }
 
@@ -165,10 +170,8 @@ h1{font-size:28px}
 <div id="details" class="details"></div>
 
 <div class="today">
-
 เริ่มจุดประทีปตั้งแต่วันที่  
 25 มีนาคม พ.ศ. 2564
-
 </div>
 
 <div id="today" class="today"></div>
