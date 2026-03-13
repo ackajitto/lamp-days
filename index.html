@@ -45,7 +45,7 @@ animation:flicker 2s infinite;
 
 h1{
 font-size:40px;
-color:#973f2d;
+color:#ab3e27;
 margin:10px 0;
 font-weight:700;
 }
@@ -363,7 +363,7 @@ months+=12;
 }
 
 document.getElementById("details").innerText=
-`เท่ากับ ${years} ปี ${months} เดือน ${daysRemain} วัน`;
+`🗓️ เท่ากับ: ${years} ปี ${months} เดือน ${daysRemain} วัน`;
 
 const thaiMonths=[
 "มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
@@ -375,12 +375,13 @@ const month=thaiMonths[today.getMonth()];
 const year=today.getFullYear()+543;
 
 document.getElementById("today").innerText=
-`วันนี้วันที่ ${day} ${month} พ.ศ. ${year}`;
+`🗓️ วันนี้: ${day} ${month} พ.ศ. ${year}`;
 
 </script>
 
 </body>
 </html>
+
 
 
 
