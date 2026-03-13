@@ -237,7 +237,7 @@ pointer-events:none;
 <div class="actions">
 
 <button class="merit-btn" onclick="addMerit(event)">
-🪔 ร่วมจุดประทีปออนไลน์
+🪔 ร่วมจุดประทีป
 <span id="meritCount">0</span>
 </button>
 
@@ -328,7 +328,7 @@ const diffMs = today - startDate;
 const days = Math.floor(diffMs/(1000*60*60*24))+1;
 
 document.getElementById("days").innerHTML=
-`จุดประทีปบูชา<br>เจดีย์พระพุทธเจ้า<br>1 ล้านพระองค์<br>มาแล้ว ${days} วัน`;
+`จุดประทีปบูชาเจดีย์<br>เจดีย์พระพุทธเจ้า<br>1 ล้านพระองค์<br>มาแล้ว ${days} วัน`;
 let years = today.getFullYear()-startDate.getFullYear();
 let months = today.getMonth()-startDate.getMonth();
 let daysRemain = today.getDate()-startDate.getDate();
@@ -362,5 +362,6 @@ document.getElementById("today").innerText=
 
 </body>
 </html>
+
 
 
