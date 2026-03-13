@@ -14,11 +14,7 @@
 body{
 font-family:'Sarabun',sans-serif;
 margin:0;
-
-/* เพิ่มช่องว่างบนล่าง */
-
 padding:50px 0;
-
 background:url("images/chedi.jpg") center/cover no-repeat fixed;
 min-height:100vh;
 display:flex;
@@ -27,10 +23,10 @@ justify-content:center;
 }
 
 .container{
-background:rgba(255,255,255,0.5);
+background:rgba(255,255,255,0.55);
 backdrop-filter:blur(6px);
-padding:24px 18px;
-border-radius:20px;
+padding:26px 20px;
+border-radius:22px;
 max-width:480px;
 width:75%;
 text-align:center;
@@ -68,7 +64,7 @@ font-size:20px;
 color:#222;
 }
 
-/* วิดีโอแนวตั้ง */
+/* วิดีโอ */
 
 .video{
 margin-top:20px;
@@ -85,9 +81,92 @@ height:560px;
 border:0;
 }
 
-@keyframes flicker{
-0%,100%{opacity:1}
-50%{opacity:0.8}
+/* ข้อความอธิษฐาน */
+
+.prayer{
+margin-top:22px;
+font-size:18px;
+line-height:1.7;
+color:#5a3b2e;
+}
+
+/* คำบูชา */
+
+.blessing{
+margin-top:24px;
+padding-top:18px;
+border-top:1px solid #ddd;
+}
+
+.blessing-title{
+font-size:24px;
+font-weight:bold;
+color:#6b3f1f;
+margin-bottom:10px;
+}
+
+.pali{
+font-size:22px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.translate{
+font-size:18px;
+color:#333;
+}
+
+/* ปุ่ม */
+
+.actions{
+margin-top:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.merit-btn{
+display:flex;
+align-items:center;
+gap:10px;
+background:#c0392b;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.merit-btn:hover{
+transform:scale(1.05);
+}
+
+/* เอฟเฟกต์ระยิบ */
+
+.sparkle{
+position:absolute;
+font-size:18px;
+animation:sparkle 1s ease-out forwards;
+}
+
+@keyframes sparkle{
+0%{opacity:1; transform:translateY(0)}
+100%{opacity:0; transform:translateY(-40px)}
+}
+
+.share{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.share img{
+width:34px;
+cursor:pointer;
 }
 
 /* มือถือ */
@@ -108,6 +187,11 @@ h1{font-size:33px;}
 height:520px;
 }
 
+}
+
+@keyframes flicker{
+0%,100%{opacity:1}
+50%{opacity:0.8}
 }
 
 </style>
@@ -139,6 +223,49 @@ src="https://www.youtube.com/embed/HwiobATjsSw"
 title="YouTube Shorts"
 allowfullscreen>
 </iframe>
+</div>
+
+<div class="prayer">
+ขอให้ชีวิตเจริญรุ่งเรือง พ้นทุกข์โศกโรคภัย<br>
+มีปัญญาธรรม สมปรารถนาทุกประการ<br>
+อุทิศผลบุญให้ พ่อ-แม่-ญาติพี่น้อง
+</div>
+
+<div class="blessing">
+
+<div class="blessing-title">
+คำกล่าวบูชาพระเจดีย์ด้วยประทีป
+</div>
+
+<div class="pali">
+อิมินา ปทีเปน พุทธเจติยํ ปูเชมิ
+</div>
+
+<div class="translate">
+ข้าพเจ้าขอบูชาพระพุทธเจดีย์ ด้วยประทีปนี้
+</div>
+
+</div>
+
+<div class="actions">
+
+<button class="merit-btn" onclick="addMerit(event)">
+🌸 ร่วมอนุโมทนา
+<span id="meritCount">1,250,510</span>
+</button>
+
+<div class="share">
+
+<a href="https://line.me/R/msg/text/?อนุโมทนาบุญจุดประทีปบูชาเจดีย์ https://ackajitto.github.io/lamp-days/" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg">
+</a>
+
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://ackajitto.github.io/lamp-days/" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+</a>
+
+</div>
+
 </div>
 
 </div>
@@ -186,10 +313,40 @@ const year=today.getFullYear()+543;
 document.getElementById("today").innerText=
 `วันนี้วันที่ ${day} ${month} พ.ศ. ${year}`;
 
+/* ปุ่มอนุโมทนา */
+
+function addMerit(e){
+
+let count=document.getElementById("meritCount");
+
+let num=parseInt(count.innerText.replace(/,/g,""));
+
+num++;
+
+count.innerText=num.toLocaleString();
+
+/* เอฟเฟกต์ระยิบ */
+
+for(let i=0;i<6;i++){
+
+let sparkle=document.createElement("div");
+
+sparkle.className="sparkle";
+
+sparkle.innerHTML="✨";
+
+sparkle.style.left=(e.pageX+(Math.random()*30-15))+"px";
+sparkle.style.top=(e.pageY+(Math.random()*30-15))+"px";
+
+document.body.appendChild(sparkle);
+
+setTimeout(()=>sparkle.remove(),1000);
+
+}
+
+}
+
 </script>
 
 </body>
 </html>
-
-
-
