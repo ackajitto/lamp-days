@@ -9,6 +9,10 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <style>
 
 body{
@@ -65,8 +69,6 @@ font-size:20px;
 color:#222;
 }
 
-/* วิดีโอ */
-
 .video{
 margin-top:20px;
 border-radius:16px;
@@ -82,16 +84,12 @@ height:560px;
 border:0;
 }
 
-/* ข้อความอธิษฐาน */
-
 .prayer{
 margin-top:22px;
 font-size:18px;
 line-height:1.7;
 color:#5a3b2e;
 }
-
-/* คำบูชา */
 
 .blessing{
 margin-top:24px;
@@ -117,13 +115,10 @@ font-size:18px;
 color:#333;
 }
 
-/* ปุ่ม */
-
 .actions{
 margin-top:30px;
 display:flex;
 justify-content:center;
-align-items:center;
 flex-direction:column;
 gap:18px;
 }
@@ -141,14 +136,7 @@ border-radius:40px;
 font-size:20px;
 cursor:pointer;
 box-shadow:0 0 18px rgba(255,180,80,0.8);
-transition:0.2s;
 }
-
-.merit-btn:hover{
-transform:scale(1.05);
-}
-
-/* ปุ่มแชร์ */
 
 .share{
 margin-top:30px;
@@ -162,8 +150,6 @@ width:36px;
 cursor:pointer;
 }
 
-/* เอฟเฟกต์ประกาย */
-
 .sparkle{
 position:absolute;
 font-size:18px;
@@ -175,8 +161,6 @@ pointer-events:none;
 0%{opacity:1; transform:translateY(0)}
 100%{opacity:0; transform:translateY(-40px)}
 }
-
-/* แสงบุญกระจาย */
 
 .light-burst{
 position:fixed;
@@ -192,14 +176,8 @@ pointer-events:none;
 }
 
 @keyframes burst{
-0%{
-opacity:0.9;
-transform:translate(-50%,-50%) scale(0.3);
-}
-100%{
-opacity:0;
-transform:translate(-50%,-50%) scale(9);
-}
+0%{opacity:0.9; transform:translate(-50%,-50%) scale(0.3);}
+100%{opacity:0; transform:translate(-50%,-50%) scale(9);}
 }
 
 @keyframes flicker{
@@ -207,24 +185,7 @@ transform:translate(-50%,-50%) scale(9);
 50%{opacity:0.8}
 }
 
-/* มือถือ */
-
-@media(max-width:600px){
-
-.lamp{font-size:80px;}
-h1{font-size:33px;}
-.counter{font-size:36px;}
-.details{font-size:24px;}
-.today{font-size:22px;}
-
-.video iframe{
-height:520px;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
@@ -247,11 +208,7 @@ height:520px;
 <div id="today" class="today"></div>
 
 <div class="video">
-<iframe
-src="https://www.youtube.com/embed/HwiobATjsSw"
-title="YouTube Shorts"
-allowfullscreen>
-</iframe>
+<iframe src="https://www.youtube.com/embed/HwiobATjsSw" allowfullscreen></iframe>
 </div>
 
 <div class="prayer">
@@ -281,7 +238,7 @@ allowfullscreen>
 
 <button class="merit-btn" onclick="addMerit(event)">
 🪔 ร่วมจุดประทีปธรรม
-<span id="meritCount">1</span>
+<span id="meritCount">0</span>
 </button>
 
 </div>
@@ -302,61 +259,43 @@ allowfullscreen>
 
 <script>
 
-const startDate = new Date('2021-03-25');
-const today = new Date();
+/* Firebase */
 
-startDate.setHours(0,0,0,0);
-today.setHours(0,0,0,0);
+const firebaseConfig = {
+apiKey: "AIzaSyA2tSkUL8rXvp9P50lMp5FvZvqp_catok8",
+authDomain: "merit-lamp.firebaseapp.com",
+databaseURL: "https://merit-lamp-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "merit-lamp",
+storageBucket: "merit-lamp.firebasestorage.app",
+messagingSenderId: "305790589869",
+appId: "1:305790589869:web:3ae72ede1426cab8ee1f24",
+measurementId: "G-YWLCRXPL69"
+};
 
-const diffMs = today - startDate;
-const days = Math.floor(diffMs/(1000*60*60*24))+1;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-document.getElementById("days").innerHTML=
-`จุดประทีปบูชา<br>เจดีย์พระพุทธเจ้า<br>1 ล้านพระองค์<br>มาแล้ว ${days} วัน`;
+/* อ่านค่าทั่วโลก */
 
-let years = today.getFullYear()-startDate.getFullYear();
-let months = today.getMonth()-startDate.getMonth();
-let daysRemain = today.getDate()-startDate.getDate();
+db.ref("meritCount").on("value",(snapshot)=>{
+let value = snapshot.val() || 0;
+document.getElementById("meritCount").innerText =
+value.toLocaleString();
+});
 
-if(daysRemain<0){
-months--;
-daysRemain+=new Date(today.getFullYear(),today.getMonth(),0).getDate();
-}
-
-if(months<0){
-years--;
-months+=12;
-}
-
-document.getElementById("details").innerText=
-`เท่ากับ ${years} ปี ${months} เดือน ${daysRemain} วัน`;
-
-const thaiMonths=[
-"มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
-"กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"
-];
-
-const day=today.getDate();
-const month=thaiMonths[today.getMonth()];
-const year=today.getFullYear()+543;
-
-document.getElementById("today").innerText=
-`วันนี้วันที่ ${day} ${month} พ.ศ. ${year}`;
+/* เพิ่มบุญ */
 
 function addMerit(e){
 
-let count=document.getElementById("meritCount");
-let num=parseInt(count.innerText.replace(/,/g,""));
-
-num++;
-count.innerText=num.toLocaleString();
+db.ref("meritCount").transaction(function(current){
+return (current || 0) + 1;
+});
 
 /* แสงบุญ */
 
 let burst=document.createElement("div");
 burst.className="light-burst";
 document.body.appendChild(burst);
-
 setTimeout(()=>burst.remove(),900);
 
 /* ประกาย */
@@ -373,13 +312,25 @@ sparkle.style.top=(e.pageY+(Math.random()*60-30))+"px";
 document.body.appendChild(sparkle);
 
 setTimeout(()=>sparkle.remove(),1000);
-
 }
 
 }
+
+/* วัน */
+
+const startDate = new Date('2021-03-25');
+const today = new Date();
+
+startDate.setHours(0,0,0,0);
+today.setHours(0,0,0,0);
+
+const diffMs = today - startDate;
+const days = Math.floor(diffMs/(1000*60*60*24))+1;
+
+document.getElementById("days").innerHTML=
+`จุดประทีปบูชา<br>เจดีย์พระพุทธเจ้า<br>1 ล้านพระองค์<br>มาแล้ว ${days} วัน`;
 
 </script>
 
 </body>
 </html>
-
