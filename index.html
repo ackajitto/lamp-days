@@ -657,6 +657,115 @@ h1 {
 }
 
 /* ─────────────────────────────────────────
+   DONOR TOGGLE SECTION
+───────────────────────────────────────── */
+.donor-toggle-wrap {
+  margin-top: 22px;
+}
+
+.donor-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(120,80,10,0.1), rgba(180,130,11,0.08));
+  border: 1px solid rgba(180,130,11,0.3);
+  border-radius: 40px;
+  padding: 12px 20px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold-deep);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.donor-toggle-btn:hover {
+  background: linear-gradient(135deg, rgba(140,90,10,0.15), rgba(200,150,20,0.12));
+  border-color: rgba(200,160,30,0.5);
+  box-shadow: 0 4px 14px rgba(120,80,10,0.12);
+}
+
+.donor-toggle-btn[aria-expanded="true"] {
+  border-radius: 20px 20px 0 0;
+  border-bottom-color: transparent;
+}
+
+.donor-chevron {
+  font-size: 11px;
+  margin-left: 2px;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  display: inline-block;
+  color: var(--gold-mid);
+}
+
+.donor-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* ── Panel ── */
+.donor-section {
+  background: linear-gradient(160deg, rgba(253,246,227,0.9), rgba(240,220,170,0.75));
+  border: 1px solid rgba(180,130,11,0.3);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  animation: donorReveal 0.38s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes donorReveal {
+  from { opacity: 0; transform: translateY(-12px); max-height: 0; }
+  to   { opacity: 1; transform: translateY(0);      max-height: 600px; }
+}
+
+.donor-inner {
+  padding: 20px 22px 22px;
+  text-align: center;
+}
+
+.donor-block {
+  margin-bottom: 6px;
+}
+
+.donor-block-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-mid);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(180,130,11,0.2);
+}
+
+/* ── รายชื่อ — อักษรเดียวกัน จัดกึ่งกลาง ── */
+.donor-name-item {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brown-dark);
+  padding: 8px 14px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  background: rgba(255,250,235,0.65);
+  border: 1px solid rgba(200,160,40,0.18);
+  transition: background 0.2s, transform 0.15s;
+  line-height: 1.5;
+}
+
+.donor-name-item:hover {
+  background: rgba(255,248,220,0.9);
+  transform: scale(1.01);
+}
+
+.donor-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(180,130,11,0.3), transparent);
+  margin: 14px 0;
+}
+
+/* ─────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────── */
 @media (max-width: 400px) {
@@ -800,6 +909,55 @@ h1 {
     </div>
   </div>
 
+  <!-- Donor Section Toggle -->
+  <div class="donor-toggle-wrap">
+    <button class="donor-toggle-btn" id="donorToggleBtn" onclick="toggleDonor()" aria-expanded="false" aria-controls="donorSection">
+      <span class="donor-toggle-icon" id="donorIcon">🙏</span>
+      <span>รายนามเจ้าภาพและอุทิศบุญกุศล</span>
+      <span class="donor-chevron" id="donorChevron">▼</span>
+    </button>
+
+    <div class="donor-section" id="donorSection" hidden>
+      <div class="donor-inner">
+
+        <!-- ───────────────────────────────────────
+             เจ้าภาพร่วมบุญถวายประทีป
+             วิธีเพิ่มชื่อ: คัดลอก <div class="donor-name-item"> ... </div>
+             แล้ววางต่อท้ายได้เลย
+        ─────────────────────────────────────────── -->
+        <div class="donor-block">
+          <div class="donor-block-title">🪔 เจ้าภาพร่วมบุญถวายประทีป</div>
+
+         <div class="donor-name-item">บูชาธรรมมหาปูชนียาจารย์</div>
+         <div class="donor-name-item">พระมหาอภิเชษ มุทุจิตฺโต</div>
+          <div class="donor-name-item">พระอภัย อคฺคจิตฺโต</div>
+          <!-- เพิ่มชื่อเจ้าภาพที่นี่ -->
+          <!-- <div class="donor-name-item">ชื่อ นามสกุล</div> -->
+
+        </div>
+
+        <div class="donor-divider"></div>
+
+        <!-- ───────────────────────────────────────
+             อุทิศบุญให้
+             วิธีเพิ่มชื่อ: คัดลอก <div class="donor-name-item"> ... </div>
+             แล้ววางต่อท้ายได้เลย
+        ─────────────────────────────────────────── -->
+        <div class="donor-block">
+          <div class="donor-block-title">🌸 อุทิศบุญให้</div>
+
+          <div class="donor-name-item">คุณพ่อวัน กะสวย และญาติมิตรในตระกูลทุกท่าน</div>
+          <div class="donor-name-item">บรรพบุรุษหมู่ญาติทุกท่าน</div>
+          <div class="donor-name-item">สรรพสัตวืทั้งหลายทั้งงปวง</div>
+          <!-- เพิ่มชื่อผู้รับอุทิศที่นี่ -->
+          <!-- <div class="donor-name-item">ชื่อ นามสกุล</div> -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <p class="footer-note">🙏 ขออนุโมทนาสาธุในบุญกุศลของทุกท่าน</p>
 
 </main>
@@ -892,6 +1050,25 @@ function spawnSparkles(cx, cy, count) {
     `;
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 1000);
+  }
+}
+
+/* ── Toggle donor section ── */
+function toggleDonor() {
+  const btn     = document.getElementById("donorToggleBtn");
+  const section = document.getElementById("donorSection");
+  const chevron = document.getElementById("donorChevron");
+  const isOpen  = btn.getAttribute("aria-expanded") === "true";
+
+  if (isOpen) {
+    section.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+    chevron.classList.remove("open");
+  } else {
+    section.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    chevron.classList.add("open");
+    setTimeout(() => section.scrollIntoView({ behavior: "smooth", block: "nearest" }), 80);
   }
 }
 
