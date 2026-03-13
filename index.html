@@ -9,7 +9,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
@@ -18,7 +17,7 @@
 body{
 font-family:'Sarabun',sans-serif;
 margin:0;
-padding:50px 0;
+padding:60px 0;
 background:url("images/chedi.jpg") center/cover no-repeat fixed;
 min-height:100vh;
 display:flex;
@@ -30,7 +29,7 @@ overflow-x:hidden;
 .container{
 background:rgba(255,255,255,0.55);
 backdrop-filter:blur(6px);
-padding:26px 20px;
+padding:28px 22px;
 border-radius:22px;
 max-width:480px;
 width:75%;
@@ -58,13 +57,12 @@ line-height:1.45;
 }
 
 .day-number{
-font-size:clamp(36px,7vw,56px);
+font-size:clamp(38px,7vw,58px);
 font-weight:700;
 background:linear-gradient(180deg,#ffd700,#f1c40f,#b8860b);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-display:inline-block;
-margin-top:4px;
+text-shadow:0 0 10px rgba(255,215,0,0.5);
 }
 
 .details{
@@ -80,7 +78,7 @@ color:#222;
 }
 
 .video{
-margin-top:20px;
+margin-top:22px;
 border-radius:16px;
 overflow:hidden;
 max-width:320px;
@@ -95,14 +93,14 @@ border:0;
 }
 
 .prayer{
-margin-top:22px;
+margin-top:24px;
 font-size:18px;
 line-height:1.7;
 color:#5a3b2e;
 }
 
 .blessing{
-margin-top:24px;
+margin-top:26px;
 padding-top:18px;
 border-top:1px solid #ddd;
 }
@@ -126,7 +124,7 @@ color:#333;
 }
 
 .actions{
-margin-top:30px;
+margin-top:32px;
 display:flex;
 justify-content:center;
 flex-direction:column;
@@ -145,7 +143,13 @@ padding:14px 26px;
 border-radius:40px;
 font-size:20px;
 cursor:pointer;
-box-shadow:0 0 18px rgba(255,180,80,0.8);
+animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 rgba(255,215,0,0.5);}
+50%{box-shadow:0 0 20px rgba(255,215,0,0.9);}
+100%{box-shadow:0 0 0 rgba(255,215,0,0.5);}
 }
 
 .share{
@@ -269,46 +273,34 @@ pointer-events:none;
 
 <script>
 
-/* Firebase */
-
-const firebaseConfig = {
-apiKey: "AIzaSyA2tSkUL8rXvp9P50lMp5FvZvqp_catok8",
-authDomain: "merit-lamp.firebaseapp.com",
-databaseURL: "https://merit-lamp-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "merit-lamp",
-storageBucket: "merit-lamp.firebasestorage.app",
-messagingSenderId: "305790589869",
-appId: "1:305790589869:web:3ae72ede1426cab8ee1f24",
-measurementId: "G-YWLCRXPL69"
+const firebaseConfig={
+apiKey:"AIzaSyA2tSkUL8rXvp9P50lMp5FvZvqp_catok8",
+authDomain:"merit-lamp.firebaseapp.com",
+databaseURL:"https://merit-lamp-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"merit-lamp",
+storageBucket:"merit-lamp.firebasestorage.app",
+messagingSenderId:"305790589869",
+appId:"1:305790589869:web:3ae72ede1426cab8ee1f24"
 };
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-/* อ่านค่าทั่วโลก */
+const db=firebase.database();
 
 db.ref("meritCount").on("value",(snapshot)=>{
-let value = snapshot.val() || 0;
-document.getElementById("meritCount").innerText =
-value.toLocaleString();
+let value=snapshot.val()||0;
+document.getElementById("meritCount").innerText=value.toLocaleString();
 });
-
-/* เพิ่มบุญ */
 
 function addMerit(e){
 
-db.ref("meritCount").transaction(function(current){
-return (current || 0) + 1;
+db.ref("meritCount").transaction(current=>{
+return (current||0)+1;
 });
-
-/* แสงบุญ */
 
 let burst=document.createElement("div");
 burst.className="light-burst";
 document.body.appendChild(burst);
 setTimeout(()=>burst.remove(),900);
-
-/* ประกาย */
 
 for(let i=0;i<5;i++){
 
@@ -320,30 +312,40 @@ sparkle.style.left=(e.pageX+(Math.random()*60-30))+"px";
 sparkle.style.top=(e.pageY+(Math.random()*60-30))+"px";
 
 document.body.appendChild(sparkle);
-
 setTimeout(()=>sparkle.remove(),1000);
 }
 
 }
 
-/* วัน */
-
-const startDate = new Date('2021-03-25');
-const today = new Date();
+const startDate=new Date('2021-03-25');
+const today=new Date();
 
 startDate.setHours(0,0,0,0);
 today.setHours(0,0,0,0);
 
-const diffMs = today - startDate;
-const days = Math.floor(diffMs/(1000*60*60*24))+1;
+const diffMs=today-startDate;
+const days=Math.floor(diffMs/(1000*60*60*24))+1;
 
 document.getElementById("days").innerHTML=
 `จุดประทีปบูชาพระมหาธรรมกายเจดีย์<br>
 เจดีย์พระพุทธเจ้า 1 ล้านพระองค์<br>
-มาแล้ว <span class="day-number">${days}</span> วัน`;
-let years = today.getFullYear()-startDate.getFullYear();
-let months = today.getMonth()-startDate.getMonth();
-let daysRemain = today.getDate()-startDate.getDate();
+มาแล้ว <span id="dayCount" class="day-number">0</span> วัน`;
+
+let current=0;
+let target=days;
+
+let counter=setInterval(()=>{
+current+=Math.ceil(target/40);
+if(current>=target){
+current=target;
+clearInterval(counter);
+}
+document.getElementById("dayCount").innerText=current;
+},30);
+
+let years=today.getFullYear()-startDate.getFullYear();
+let months=today.getMonth()-startDate.getMonth();
+let daysRemain=today.getDate()-startDate.getDate();
 
 if(daysRemain<0){
 months--;
@@ -374,9 +376,3 @@ document.getElementById("today").innerText=
 
 </body>
 </html>
-
-
-
-
-
-
