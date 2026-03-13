@@ -365,6 +365,77 @@ h1 {
 }
 
 /* ─────────────────────────────────────────
+   CHEDI IMAGE SECTION
+───────────────────────────────────────── */
+.chedi-wrap {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 20px 0 0;
+  border: 2px solid rgba(212,168,67,0.45);
+  box-shadow:
+    0 8px 32px rgba(61,32,8,0.35),
+    0 0 0 1px rgba(255,220,80,0.1) inset;
+  aspect-ratio: 16 / 9;
+}
+
+.chedi-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.4s ease;
+}
+
+/* แสงวาบบนรูป — เริ่ม hidden */
+.chedi-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(255,240,140,0.72) 0%,
+    rgba(255,200,60,0.45)  30%,
+    rgba(255,140,20,0.2)   60%,
+    transparent 80%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.05s ease-in;
+}
+
+/* class เพิ่มเมื่อกดปุ่ม */
+.chedi-overlay.flash {
+  opacity: 1;
+  animation: chediFlash 0.65s ease-out forwards;
+}
+
+@keyframes chediFlash {
+  0%   { opacity: 0.95; }
+  35%  { opacity: 0.8;  }
+  100% { opacity: 0;    }
+}
+
+/* ประกายรอบรูป */
+.chedi-wrap.lit .chedi-img {
+  filter: brightness(1.18) saturate(1.1);
+}
+
+.chedi-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(30,10,0,0.72));
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 18px 12px 10px;
+  font-family: 'Sarabun', sans-serif;
+}
+
+/* ─────────────────────────────────────────
    BLESSING SECTION
 ───────────────────────────────────────── */
 .blessing-section {
@@ -545,16 +616,33 @@ h1 {
 .light-burst {
   position: fixed;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,220,80,0.85) 0%, rgba(255,150,30,0.4) 40%, transparent 70%);
+  background: radial-gradient(circle,
+    rgba(255,240,120,0.95) 0%,
+    rgba(255,200,50,0.75)  25%,
+    rgba(255,140,20,0.45)  55%,
+    transparent 75%
+  );
   pointer-events: none;
   z-index: 9998;
-  animation: burstOut 0.8s ease-out forwards;
+  animation: burstOut 0.9s ease-out forwards;
   transform-origin: center;
+  mix-blend-mode: screen;
+}
+
+.light-burst--ring {
+  background: radial-gradient(circle,
+    transparent 30%,
+    rgba(255,210,80,0.6) 50%,
+    rgba(255,160,30,0.3) 65%,
+    transparent 80%
+  );
+  animation-duration: 0.7s;
 }
 
 @keyframes burstOut {
-  0%   { opacity: 0.9; transform: translate(-50%,-50%) scale(0.2); }
-  100% { opacity: 0;   transform: translate(-50%,-50%) scale(8);   }
+  0%   { opacity: 1;   transform: translate(-50%,-50%) scale(0.1); }
+  40%  { opacity: 0.9; }
+  100% { opacity: 0;   transform: translate(-50%,-50%) scale(14);  }
 }
 
 /* ─────────────────────────────────────────
@@ -661,6 +749,13 @@ h1 {
     </p>
   </div>
 
+  <!-- Chedi Image -->
+  <div class="chedi-wrap" id="chediWrap">
+    <img src="images/chedi.jpg" alt="พระมหาธรรมกายเจดีย์" class="chedi-img">
+    <div class="chedi-overlay" id="chediOverlay"></div>
+    <div class="chedi-label">พระมหาธรรมกายเจดีย์</div>
+  </div>
+
   <!-- Blessing / Pali -->
   <div class="blessing-section">
     <h2 class="blessing-title">คำกล่าวบูชาพระเจดีย์</h2>
@@ -732,41 +827,71 @@ db.ref("meritCount").on("value", (snap) => {
   document.getElementById("meritCount").innerText = val.toLocaleString("th-TH");
 });
 
-/* ── Rate-limited merit click ── */
-let lastClick = 0;
-
+/* ── Merit click — no rate limit, fires every tap ── */
 function addMerit(e) {
-  const now = Date.now();
-  if (now - lastClick < 1500) return;
-  lastClick = now;
-
   db.ref("meritCount").transaction(cur => (cur || 0) + 1);
 
   spawnBurst(e.clientX, e.clientY);
-  spawnSparkles(e.clientX, e.clientY, 7);
+  spawnSparkles(e.clientX, e.clientY, 10);
+  flashChedi();
+}
+
+/* ── Flash light on chedi image ── */
+function flashChedi() {
+  const wrap    = document.getElementById("chediWrap");
+  const overlay = document.getElementById("chediOverlay");
+
+  // reset ก่อน เพื่อให้ animation ยิงซ้ำได้รัวๆ
+  overlay.classList.remove("flash");
+  wrap.classList.remove("lit");
+  void overlay.offsetWidth; // reflow trigger
+
+  overlay.classList.add("flash");
+  wrap.classList.add("lit");
+
+  // ประกาย sparkle บนรูปเจดีย์ สุ่มตำแหน่ง
+  const rect = wrap.getBoundingClientRect();
+  const cx   = rect.left + rect.width  * (0.25 + Math.random() * 0.5);
+  const cy   = rect.top  + rect.height * (0.15 + Math.random() * 0.55);
+  spawnSparkles(cx, cy, 5);
+
+  setTimeout(() => {
+    overlay.classList.remove("flash");
+    wrap.classList.remove("lit");
+  }, 700);
 }
 
 function spawnBurst(cx, cy) {
+  /* วงใหญ่ตรงกลาง */
   const el = document.createElement("div");
   el.className = "light-burst";
-  el.style.cssText = `left:${cx}px; top:${cy}px; width:60px; height:60px;`;
+  el.style.cssText = `left:${cx}px; top:${cy}px; width:200px; height:200px;`;
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 800);
+  setTimeout(() => el.remove(), 900);
+
+  /* วงรองเพิ่มความลึก */
+  const el2 = document.createElement("div");
+  el2.className = "light-burst light-burst--ring";
+  el2.style.cssText = `left:${cx}px; top:${cy}px; width:120px; height:120px;`;
+  document.body.appendChild(el2);
+  setTimeout(() => el2.remove(), 700);
 }
 
 function spawnSparkles(cx, cy, count) {
-  const icons = ["✨", "🌟", "💫", "⭐"];
+  const icons = ["✨", "🌟", "💫", "⭐", "🔆", "🌠"];
   for (let i = 0; i < count; i++) {
     const el = document.createElement("div");
     el.className = "sparkle";
     el.textContent = icons[Math.floor(Math.random() * icons.length)];
+    const spread = 120;
     el.style.cssText = `
-      left: ${cx + (Math.random() * 80 - 40)}px;
-      top:  ${cy + (Math.random() * 80 - 40)}px;
-      animation-delay: ${Math.random() * 0.3}s;
+      left: ${cx + (Math.random() * spread * 2 - spread)}px;
+      top:  ${cy + (Math.random() * spread * 2 - spread)}px;
+      font-size: ${14 + Math.random() * 14}px;
+      animation-delay: ${Math.random() * 0.15}s;
     `;
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1200);
+    setTimeout(() => el.remove(), 1000);
   }
 }
 
