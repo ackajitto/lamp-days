@@ -34,6 +34,8 @@ border-radius:22px;
 max-width:480px;
 width:80%;
 text-align:center;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
 .lamp{
@@ -51,7 +53,7 @@ font-weight:700;
 .counter{
 font-size:clamp(24px,5vw,36px);
 font-weight:bold;
-color:#d35400;
+color:#6B4F2E;
 margin-top:16px;
 line-height:1.45;
 }
@@ -331,7 +333,7 @@ const days=Math.floor(diffMs/(1000*60*60*24))+1;
 document.getElementById("days").innerHTML=
 `จุดประทีปบูชาพระมหาธรรมกายเจดีย์<br>
 เจดีย์พระพุทธเจ้า 1 ล้านพระองค์<br>
-มาแล้ว <span id="dayCount" class="day-number">0</span> วัน`;
+🕓มาแล้ว: <span id="dayCount" class="day-number">0</span> วัน`;
 
 let current=0;
 let target=days;
@@ -378,6 +380,7 @@ document.getElementById("today").innerText=
 
 </body>
 </html>
+
 
 
 
