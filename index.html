@@ -57,6 +57,16 @@ margin-top:16px;
 line-height:1.45;
 }
 
+.day-number{
+font-size:clamp(36px,7vw,56px);
+font-weight:700;
+background:linear-gradient(180deg,#ffd700,#f1c40f,#b8860b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+display:inline-block;
+margin-top:4px;
+}
+
 .details{
 font-size:22px;
 margin-top:8px;
@@ -229,7 +239,7 @@ pointer-events:none;
 </div>
 
 <div class="translate">
-ข้าพเจ้าขอน้อมบูชาพระพุทธเจดีย์ ที่ประดิษฐานในที่ทั้งปวง และพระบรมสารีริกธาตุ ต้นพระศรีมหาโพธิ์ พระพุทธรูปทั้งปวง ในกาลทุกเมื่อ ฯ
+ข้าพเจ้าขอบูชาพระพุทธเจดีย์ พระบรมสารีริกธาตุ ต้นพระศรีมหาโพธิ์ และพระพุทธรูป ที่ประดิษฐานในที่ทั้งปวง ในกาลทุกเมื่อ ฯ
 </div>
 
 </div>
@@ -328,7 +338,9 @@ const diffMs = today - startDate;
 const days = Math.floor(diffMs/(1000*60*60*24))+1;
 
 document.getElementById("days").innerHTML=
-`จุดประทีปบูชาเจดีย์<br>พระพุทธเจ้า 1 ล้านพระองค์<br>มาแล้ว ${days} วัน`;
+`จุดประทีปบูชาพระมหาธรรมกายเจดีย์<br>
+เจดีย์พระพุทธเจ้า 1 ล้านพระองค์<br>
+มาแล้ว <span class="day-number">${days}</span> วัน`;
 let years = today.getFullYear()-startDate.getFullYear();
 let months = today.getMonth()-startDate.getMonth();
 let daysRemain = today.getDate()-startDate.getDate();
@@ -362,6 +374,7 @@ document.getElementById("today").innerText=
 
 </body>
 </html>
+
 
 
 
