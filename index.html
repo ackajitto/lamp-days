@@ -65,7 +65,6 @@ body {
   position: relative;
 }
 
-/* Background image layer */
 body::before {
   content: '';
   position: fixed;
@@ -73,11 +72,9 @@ body::before {
   background: url("images/chedi.jpg") center / cover no-repeat;
   opacity: 0.55;
   z-index: 0;
-  /* iOS Safari fix: no fixed attachment */
   will-change: transform;
 }
 
-/* Dark vignette overlay */
 body::after {
   content: '';
   position: fixed;
@@ -146,7 +143,6 @@ body::after {
   to   { opacity: 1; transform: translateY(0)    scale(1);    }
 }
 
-/* Gold top border accent */
 .card::before {
   content: '';
   position: absolute;
@@ -193,7 +189,6 @@ body::after {
   50%      { opacity: 1;   transform: scale(1.3);  }
 }
 
-/* Decorative divider */
 .divider {
   display: flex;
   align-items: center;
@@ -387,7 +382,6 @@ h1 {
   transition: filter 0.4s ease;
 }
 
-/* แสงวาบบนรูป — เริ่ม hidden */
 .chedi-overlay {
   position: absolute;
   inset: 0;
@@ -405,7 +399,6 @@ h1 {
   transition: opacity 0.05s ease-in;
 }
 
-/* class เพิ่มเมื่อกดปุ่ม */
 .chedi-overlay.flash {
   opacity: 1;
   animation: chediFlash 0.65s ease-out forwards;
@@ -417,7 +410,6 @@ h1 {
   100% { opacity: 0;    }
 }
 
-/* ประกายรอบรูป */
 .chedi-wrap.lit .chedi-img {
   filter: brightness(1.18) saturate(1.1);
 }
@@ -531,9 +523,7 @@ h1 {
     0 1px 0 rgba(255,200,100,0.3) inset;
 }
 
-.btn-merit:active {
-  transform: translateY(1px);
-}
+.btn-merit:active { transform: translateY(1px); }
 
 .merit-count {
   background: rgba(255,255,255,0.18);
@@ -567,10 +557,7 @@ h1 {
   text-transform: uppercase;
 }
 
-.share-btns {
-  display: flex;
-  gap: 14px;
-}
+.share-btns { display: flex; gap: 14px; }
 
 .share-btn {
   display: flex;
@@ -585,17 +572,9 @@ h1 {
   transition: transform 0.15s, opacity 0.2s;
 }
 .share-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-
-.share-btn-line {
-  background: #06C755;
-  color: white;
-}
-.share-btn-fb {
-  background: #1877F2;
-  color: white;
-}
-
-.share-btn img { width: 20px; height: 20px; }
+.share-btn-line { background: #06C755; color: white; }
+.share-btn-fb   { background: #1877F2; color: white; }
+.share-btn img  { width: 20px; height: 20px; }
 
 /* ─────────────────────────────────────────
    SPARKLE / BURST FX
@@ -659,9 +638,7 @@ h1 {
 /* ─────────────────────────────────────────
    DONOR TOGGLE SECTION
 ───────────────────────────────────────── */
-.donor-toggle-wrap {
-  margin-top: 22px;
-}
+.donor-toggle-wrap { margin-top: 22px; }
 
 .donor-toggle-btn {
   display: flex;
@@ -701,11 +678,8 @@ h1 {
   color: var(--gold-mid);
 }
 
-.donor-chevron.open {
-  transform: rotate(180deg);
-}
+.donor-chevron.open { transform: rotate(180deg); }
 
-/* ── Panel ── */
 .donor-section {
   background: linear-gradient(160deg, rgba(253,246,227,0.9), rgba(240,220,170,0.75));
   border: 1px solid rgba(180,130,11,0.3);
@@ -725,9 +699,7 @@ h1 {
   text-align: center;
 }
 
-.donor-block {
-  margin-bottom: 6px;
-}
+.donor-block { margin-bottom: 6px; }
 
 .donor-block-title {
   font-size: 13px;
@@ -763,6 +735,57 @@ h1 {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(180,130,11,0.3), transparent);
   margin: 14px 0;
+}
+
+/* ─────────────────────────────────────────
+   JOIN MERIT SECTION
+───────────────────────────────────────── */
+.join-section {
+  margin-top: 20px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(6,199,85,0.08), rgba(6,199,85,0.04));
+  border: 1px solid rgba(6,199,85,0.25);
+  border-radius: 18px;
+  text-align: center;
+}
+
+.join-text {
+  font-size: 15px;
+  color: var(--brown-mid);
+  line-height: 1.8;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #06C755;
+  color: white;
+  text-decoration: none;
+  padding: 12px 26px;
+  border-radius: 40px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 16px rgba(6,199,85,0.35);
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.join-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(6,199,85,0.45);
+  opacity: 0.95;
+}
+
+.join-btn:active { transform: translateY(1px); }
+
+.join-line-logo {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
 }
 
 /* ─────────────────────────────────────────
@@ -928,8 +951,8 @@ h1 {
         <div class="donor-block">
           <div class="donor-block-title">🪔 เจ้าภาพร่วมบุญถวายประทีป</div>
 
-         <div class="donor-name-item">บูชาธรรมมหาปูชนียาจารย์</div>
-         <div class="donor-name-item">พระมหาอภิเชษ มุทุจิตฺโต</div>
+          <div class="donor-name-item">บูชาธรรมมหาปูชนียาจารย์</div>
+          <div class="donor-name-item">พระมหาอภิเชษ มุทุจิตฺโต</div>
           <div class="donor-name-item">พระอภัย อคฺคจิตฺโต</div>
           <!-- เพิ่มชื่อเจ้าภาพที่นี่ -->
           <!-- <div class="donor-name-item">ชื่อ นามสกุล</div> -->
@@ -956,6 +979,26 @@ h1 {
 
       </div>
     </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       JOIN MERIT SECTION
+       ข้อความชวนร่วมทำบุญพร้อม link LINE
+  ───────────────────────────────────────── -->
+  <div class="join-section">
+    <p class="join-text">
+      สามารถร่วมทำบุญจุดประทีป<br>และแจ้งชื่ออุทิศบุญได้ที่
+    </p>
+    <a
+      class="join-btn"
+      href="https://line.me/ti/p/QNG_be9hDt"
+      target="_blank"
+      rel="noopener"
+      aria-label="ติดต่อร่วมทำบุญผ่าน LINE"
+    >
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="join-line-logo">
+      ติดต่อผ่าน LINE
+    </a>
   </div>
 
   <p class="footer-note">🙏 ขออนุโมทนาสาธุในบุญกุศลของทุกท่าน</p>
@@ -999,15 +1042,13 @@ function flashChedi() {
   const wrap    = document.getElementById("chediWrap");
   const overlay = document.getElementById("chediOverlay");
 
-  // reset ก่อน เพื่อให้ animation ยิงซ้ำได้รัวๆ
   overlay.classList.remove("flash");
   wrap.classList.remove("lit");
-  void overlay.offsetWidth; // reflow trigger
+  void overlay.offsetWidth;
 
   overlay.classList.add("flash");
   wrap.classList.add("lit");
 
-  // ประกาย sparkle บนรูปเจดีย์ สุ่มตำแหน่ง
   const rect = wrap.getBoundingClientRect();
   const cx   = rect.left + rect.width  * (0.25 + Math.random() * 0.5);
   const cy   = rect.top  + rect.height * (0.15 + Math.random() * 0.55);
@@ -1020,14 +1061,12 @@ function flashChedi() {
 }
 
 function spawnBurst(cx, cy) {
-  /* วงใหญ่ตรงกลาง */
   const el = document.createElement("div");
   el.className = "light-burst";
   el.style.cssText = `left:${cx}px; top:${cy}px; width:200px; height:200px;`;
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 900);
 
-  /* วงรองเพิ่มความลึก */
   const el2 = document.createElement("div");
   el2.className = "light-burst light-burst--ring";
   el2.style.cssText = `left:${cx}px; top:${cy}px; width:120px; height:120px;`;
@@ -1107,7 +1146,7 @@ function animateCount(targetEl, target, duration = 1200) {
   const start  = performance.now();
   const update = (ts) => {
     const prog = Math.min((ts - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - prog, 3);       // ease-out-cubic
+    const ease = 1 - Math.pow(1 - prog, 3);
     targetEl.textContent = Math.round(ease * target).toLocaleString("th-TH");
     if (prog < 1) requestAnimationFrame(update);
   };
@@ -1130,4 +1169,3 @@ function animateCount(targetEl, target, duration = 1200) {
 
 </body>
 </html>
-
