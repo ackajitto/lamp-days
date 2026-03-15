@@ -540,6 +540,67 @@ h1 {
 }
 
 /* ─────────────────────────────────────────
+   SAMMA BUTTON
+───────────────────────────────────────── */
+.btn-samma {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, #4A2C8A 0%, #6B3FA0 60%, #7B4DB0 100%);
+  color: #FFF5E0;
+  border: none;
+  padding: 16px 28px;
+  border-radius: var(--radius-btn);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.3s;
+  box-shadow:
+    0 4px 20px rgba(74,44,138,0.5),
+    0 1px 0 rgba(200,180,255,0.2) inset,
+    0 0 0 1px rgba(180,150,255,0.15);
+  animation: sammaPulse 3s ease-in-out infinite;
+  margin-top: 12px;
+}
+
+.btn-samma::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,180,255,0.15) 0%, transparent 60%);
+  border-radius: inherit;
+}
+
+.btn-samma:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(74,44,138,0.6),
+    0 1px 0 rgba(200,180,255,0.3) inset;
+}
+
+.btn-samma:active { transform: translateY(1px); }
+
+.samma-count {
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 2px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 48px;
+}
+
+@keyframes sammaPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(74,44,138,0.5), 0 0 0 0 rgba(180,150,255,0); }
+  50%      { box-shadow: 0 4px 20px rgba(74,44,138,0.5), 0 0 0 8px rgba(180,150,255,0.12); }
+}
+
+/* ─────────────────────────────────────────
    SHARE ROW
 ───────────────────────────────────────── */
 .share-section {
@@ -712,7 +773,6 @@ h1 {
   border-bottom: 1px solid rgba(180,130,11,0.2);
 }
 
-/* ── รายชื่อ — อักษรเดียวกัน จัดกึ่งกลาง ── */
 .donor-name-item {
   font-size: 16px;
   font-weight: 600;
@@ -907,6 +967,12 @@ h1 {
     <span class="merit-count" id="meritCount" aria-live="polite">0</span>
   </button>
 
+  <!-- Samma Button -->
+  <button class="btn-samma" id="sammaBtn" onclick="addSamma(event)" aria-label="สัมมาอะระหังออนไลน์">
+    🙏 สัมมาอะระหัง online
+    <span class="samma-count" id="sammaCount" aria-live="polite">0</span>
+  </button>
+
   <!-- Share -->
   <div class="share-section">
     <p class="share-label">แชร์อนุโมทนาบุญ</p>
@@ -981,10 +1047,7 @@ h1 {
     </div>
   </div>
 
-  <!-- ─────────────────────────────────────────
-       JOIN MERIT SECTION
-       ข้อความชวนร่วมทำบุญพร้อม link LINE
-  ───────────────────────────────────────── -->
+  <!-- Join Merit Section -->
   <div class="join-section">
     <p class="join-text">
       สามารถร่วมทำบุญจุดประทีป<br>และแจ้งชื่ออุทิศบุญได้ที่
@@ -1023,15 +1086,28 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+/* ── Realtime listeners ── */
 db.ref("meritCount").on("value", (snap) => {
   const val = snap.val() || 0;
   document.getElementById("meritCount").innerText = val.toLocaleString("th-TH");
 });
 
-/* ── Merit click — no rate limit, fires every tap ── */
+db.ref("sammaCount").on("value", (snap) => {
+  const val = snap.val() || 0;
+  document.getElementById("sammaCount").innerText = val.toLocaleString("th-TH");
+});
+
+/* ── Merit click ── */
 function addMerit(e) {
   db.ref("meritCount").transaction(cur => (cur || 0) + 1);
+  spawnBurst(e.clientX, e.clientY);
+  spawnSparkles(e.clientX, e.clientY, 10);
+  flashChedi();
+}
 
+/* ── Samma click ── */
+function addSamma(e) {
+  db.ref("sammaCount").transaction(cur => (cur || 0) + 1);
   spawnBurst(e.clientX, e.clientY);
   spawnSparkles(e.clientX, e.clientY, 10);
   flashChedi();
@@ -1169,4 +1245,3 @@ function animateCount(targetEl, target, duration = 1200) {
 
 </body>
 </html>
-
