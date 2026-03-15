@@ -581,7 +581,7 @@ h1 {
 ───────────────────────────────────────── */
 .sparkle {
   position: fixed;
-  font-size: 16px;
+  font-size: 12px;
   pointer-events: none;
   animation: sparkleFly 1s ease-out forwards;
   z-index: 9999;
@@ -596,9 +596,9 @@ h1 {
   position: fixed;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(255,240,120,0.95) 0%,
-    rgba(255,200,50,0.75)  25%,
-    rgba(255,140,20,0.45)  55%,
+    rgba(255,240,120,0.45) 0%,
+    rgba(255,200,50,0.35)  25%,
+    rgba(255,140,20,0.20)  55%,
     transparent 75%
   );
   pointer-events: none;
@@ -611,8 +611,8 @@ h1 {
 .light-burst--ring {
   background: radial-gradient(circle,
     transparent 30%,
-    rgba(255,210,80,0.6) 50%,
-    rgba(255,160,30,0.3) 65%,
+    rgba(255,210,80,0.35) 50%,
+    rgba(255,160,30,0.18) 65%,
     transparent 80%
   );
   animation-duration: 0.7s;
@@ -1169,3 +1169,4 @@ function animateCount(targetEl, target, duration = 1200) {
 
 </body>
 </html>
+
